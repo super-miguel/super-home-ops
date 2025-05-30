@@ -1,0 +1,94 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+clusterName: kubernetes
+
+talosVersion: "${talosVersion}"
+kubernetesVersion: "${kubernetesVersion}"
+
+endpoint: https://10.0.10.90:6443
+additionalApiServerCertSans: &sans
+  - "127.0.0.1"
+  - "10.0.10.90"
+  - "cluster.veliz.cc"
+additionalMachineCertSans: *sans
+
+clusterPodNets: ["10.42.0.0/16"]
+clusterSvcNets: ["10.43.0.0/16"]
+
+# Disable built-in CNI to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "hl-ctl-32"
+    ipAddress: "10.0.10.32"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "48:4d:7e:ce:12:7c"
+        dhcp: false
+        addresses:
+          - "10.0.10.32/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.0.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.0.10.90"
+  - hostname: "hl-ctl-33"
+    ipAddress: "10.0.10.33"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "18:66:da:4a:fd:8c"
+        dhcp: false
+        addresses:
+          - "10.0.10.33/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.0.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.0.10.90"
+  - hostname: "hl-ctl-34"
+    ipAddress: "10.0.10.34"
+    installDisk: "/dev/sda"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "50:9a:4c:42:aa:99"
+        dhcp: false
+        addresses:
+          - "10.0.10.34/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.0.10.1"
+        mtu: 1500
+        vip:
+          ip: "10.0.10.90"
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+
