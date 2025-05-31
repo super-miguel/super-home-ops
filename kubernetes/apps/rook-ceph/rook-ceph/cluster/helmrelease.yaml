@@ -33,8 +33,9 @@ spec:
       retries: 3
   values:
     monitoring:
-      enabled: true
-      createPrometheusRules: true
+      enabled: false
+      # enabled: true
+      # createPrometheusRules: true
     toolbox:
       enabled: true
     cephClusterSpec:
@@ -66,6 +67,8 @@ spec:
             enabled: true
       network:
         provider: host
+        public: 10.0.10.0/24
+        cluster: 10.0.10.0/24
         connections:
           requireMsgr2: true
       storage:
