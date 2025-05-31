@@ -9,7 +9,6 @@ endpoint: https://10.0.10.90:6443
 additionalApiServerCertSans: &sans
   - "127.0.0.1"
   - "10.0.10.90"
-  - "cluster.veliz.cc"
 additionalMachineCertSans: *sans
 
 clusterPodNets: ["10.42.0.0/16"]
