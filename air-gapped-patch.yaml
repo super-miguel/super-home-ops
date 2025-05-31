@@ -1,0 +1,29 @@
+version: ""
+machine:
+    type: ""
+    token: ""
+    certSANs: []
+    env:
+        http_proxy: http://10.5.0.2:8002
+        https_proxy: http://10.5.0.2:8002
+        no_proxy: 10.5.0.2/24
+cluster:
+    controlPlane: null
+    extraManifests:
+        - https://10.5.0.2:8001/debug.yaml
+---
+apiVersion: v1alpha1
+kind: TrustedRootsConfig
+name: air-gapped-ca
+certificates: |
+    -----BEGIN CERTIFICATE-----
+    MIIBiDCCAS+gAwIBAgIBATAKBggqhkjOPQQDAjAUMRIwEAYDVQQKEwlUZXN0IE9u
+    bHkwHhcNMjUwNTMxMDQzNTE4WhcNMjUwNjAxMDQzNTE4WjAUMRIwEAYDVQQKEwlU
+    ZXN0IE9ubHkwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARyW871rzz9WGTpoql6
+    MgiRFvaSfB8b2UIuO4Ne5YHD4Hpf5+TWW2jtMQmkWapE+pnh76ntQ9sGBI8Dz44q
+    VEwwo3IwcDAOBgNVHQ8BAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwEGCCsG
+    AQUFBwMCMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFEtoLFepfyhfb+5Xi0R/
+    RETg1LdkMA8GA1UdEQQIMAaHBAoFAAIwCgYIKoZIzj0EAwIDRwAwRAIgFOHIOJFn
+    xE09ERl1CnwHi+YkKBGT26ZLiEwwZ+4pG00CICMcDIgsbal+99ey8zzQin1dB7ti
+    C58XSPsKalc/dLIA
+    -----END CERTIFICATE-----
