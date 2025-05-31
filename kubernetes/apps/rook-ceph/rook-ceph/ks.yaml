@@ -61,7 +61,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      # GATUS_SUBDOMAIN: rook
+      # GATUS_SUBDOMAIN: rook #will add gatus later one
   prune: true
   retryInterval: 2m
   sourceRef:
